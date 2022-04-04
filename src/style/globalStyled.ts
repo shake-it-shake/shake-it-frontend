@@ -82,7 +82,8 @@ export const reset = css`
   time,
   mark,
   audio,
-  video {
+  video,
+  input {
     margin: 0;
     padding: 0;
     border: 0;
@@ -134,6 +135,7 @@ export const reset = css`
   }
   html {
     background-color: ${color.black};
+    box-sizing: border-box;
   }
 
   &::-webkit-scrollbar {

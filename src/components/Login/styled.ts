@@ -24,6 +24,7 @@ export const LoginContainer = styled.div`
 
 export const Title = styled.div`
   font-size: 32px;
+  font-weight: bold;
   color: ${color.white};
   margin-bottom: 62px;
 `
