@@ -52,16 +52,15 @@ export const LoginButton = styled.button`
   padding: 13px 144px;
   color: ${color.white};
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
   border: none;
   border-radius: 12px;
 `
 
 export const Guide = styled.div`
   display: flex;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
-
 `
 
 export const GuideText = styled.div`
