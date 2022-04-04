@@ -88,7 +88,7 @@ export const reset = css`
     border: 0;
     font-size: 100%;
     font: inherit;
-    font-family: "Spoqa Han Sans Neo", "sans-serif";
+    font-family: 'Noto Sans KR', sans-serif;
     vertical-align: baseline;
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
