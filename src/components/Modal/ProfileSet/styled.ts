@@ -1,4 +1,4 @@
-import styled from "@emotion/styled"
+import styled from "@emotion/styled";
 import { testProfile } from "assets";
 import { color } from "style/color";
 
@@ -8,14 +8,14 @@ export const Title = styled.div`
   font-weight: bold;
   margin-top: 26px;
   margin-bottom: 12px;
-`
+`;
 
 export const GuideText = styled.div`
   font-size: 16px;
   font-weight: 400;
   color: ${color.lightGray};
   margin-bottom: 30px;
-`
+`;
 
 export const ProfileImg = styled.div`
   width: 128px;
@@ -27,7 +27,7 @@ export const ProfileImg = styled.div`
   background-position: center;
   background-size: cover;
   cursor: pointer;
-`
+`;
 
 export const ProfileSetInput = styled.input`
   font-size: 16px;
@@ -40,11 +40,11 @@ export const ProfileSetInput = styled.input`
   border-radius: 12px;
   outline: none;
   box-shadow: 0 0 1px 0 ${color.lightGray} inset, 0 0 1px 0 ${color.lightGray};
-  ::placeholder{
+  ::placeholder {
     color: ${color.gray};
   }
   margin-bottom: 70px;
-`
+`;
 
 export const ProfileSetButton = styled.button`
   background-color: ${color.lightRed};
@@ -55,4 +55,4 @@ export const ProfileSetButton = styled.button`
   border-radius: 12px;
   padding: 12px 152px;
   cursor: pointer;
-`
+`;

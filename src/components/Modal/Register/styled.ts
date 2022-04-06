@@ -7,14 +7,14 @@ export const Title = styled.div`
   font-weight: bold;
   margin-top: 26px;
   margin-bottom: 12px;
-`
+`;
 
 export const GuideText = styled.div`
   font-size: 16px;
   font-weight: 400;
   color: ${color.lightGray};
   margin-bottom: 24px;
-`
+`;
 
 export const RegisterInput = styled.input`
   font-size: 16px;
@@ -27,11 +27,11 @@ export const RegisterInput = styled.input`
   border-radius: 12px;
   outline: none;
   box-shadow: 0 0 1px 0 ${color.lightGray} inset, 0 0 1px 0 ${color.lightGray};
-  ::placeholder{
+  ::placeholder {
     color: ${color.gray};
   }
   margin-bottom: 12px;
-`
+`;
 
 export const RegisterButton = styled.button`
   background-color: ${color.lightRed};
@@ -43,4 +43,4 @@ export const RegisterButton = styled.button`
   padding: 12px 136px;
   margin-top: 88px;
   cursor: pointer;
-`
+`;
