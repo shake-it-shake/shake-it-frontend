@@ -4,3 +4,4 @@ export { default as profileIcon } from "./menu/profileIcon.svg";
 export { default as closeIcon } from "./closeIcon.svg";
 export { default as discoBacll } from "./discoBall.svg";
 export { default as login } from "./login.svg";
+export { default as testProfile } from "./testProfile.png";
