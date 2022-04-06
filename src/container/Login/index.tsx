@@ -1,35 +1,16 @@
-import React from "react";
-import { useState } from "react";
+import { Fragment } from "react";
 import Login from "components/Login/Login";
 import Modal from "components/Modal/Modal";
-import Register from "components/Modal/Register/Register";
-import ProfileSet from "components/Modal/ProfileSet/ProfileSet";
-
-type ContextType = {
-  onOffModal: () => void;
-  modal: boolean;
-};
+import { Route, Routes } from "react-router-dom";
 
 const LoginContainer = () => {
-  const [modal, setModal] = useState<boolean>(false);
-
-  const onOffModal = () => {
-    setModal(!modal);
-  };
-
-  const value: ContextType = {
-    modal,
-    onOffModal,
-  };
-
-
   return (
-    <>
-    {/* <ModalContext.Provider value={value}> */}
+    <Fragment>
       <Login />
-      <Modal children={<ProfileSet />} />
-    {/* </ModalContext.Provider> */}
-    </>
+      <Routes>
+        <Route path="/signup/*" element={<Modal />} />
+      </Routes>
+    </Fragment>
   );
 };
 

@@ -1,18 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import ProfileSet from "./ProfileSet/ProfileSet";
+import Register from "./Register/Register";
 import * as S from "./styled";
 
-type PropsType = {
-  children: React.ReactNode;
-};
+const Modal = () => {
+  const navigate = useNavigate();
+  const [data, setData] = useState({
+    id: "",
+    pw: "",
+    checkPw: "",
+    nickname: "",
+    profile: "",
+  });
 
-const Modal = ({ children }: PropsType) => {
+  const { id, pw, checkPw, nickname, profile } = data;
+
+  const change = (e: React.FormEvent<HTMLInputElement>) => {
+    const { value, name } = e.currentTarget;
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
+
   return (
     <S.ModalBackground>
       <S.ModalContainer>
         <S.PositionDiv>
-          <S.CloseImg />
+          <S.CloseImg onClick={() => navigate("/")} />
         </S.PositionDiv>
-        <div>{children}</div>
+        <Routes>
+          <Route
+            path="info"
+            element={
+              <Register change={change} id={id} pw={pw} checkPw={checkPw} />
+            }
+          />
+          <Route path="profileset" element={<ProfileSet />} />
+        </Routes>
       </S.ModalContainer>
     </S.ModalBackground>
   );
