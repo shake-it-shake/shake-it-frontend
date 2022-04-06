@@ -5,7 +5,8 @@ export const Title = styled.div`
   color: white;
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 13px;
+  margin-top: 26px;
+  margin-bottom: 12px;
 `
 
 export const GuideText = styled.div`
@@ -24,6 +25,8 @@ export const RegisterInput = styled.input`
   background-color: transparent;
   border: solid 1px ${color.lightGray};
   border-radius: 12px;
+  outline: none;
+  box-shadow: 0 0 1px 0 ${color.lightGray} inset, 0 0 1px 0 ${color.lightGray};
   ::placeholder{
     color: ${color.gray};
   }
@@ -39,4 +42,5 @@ export const RegisterButton = styled.button`
   border-radius: 12px;
   padding: 12px 134px;
   margin-top: 88px;
+  cursor: pointer;
 `
