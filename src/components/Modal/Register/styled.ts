@@ -40,7 +40,7 @@ export const RegisterButton = styled.button`
   font-weight: bold;
   border: none;
   border-radius: 12px;
-  padding: 12px 134px;
+  padding: 12px 136px;
   margin-top: 88px;
   cursor: pointer;
 `
