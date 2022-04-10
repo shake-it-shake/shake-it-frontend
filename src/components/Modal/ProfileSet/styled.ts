@@ -17,19 +17,26 @@ export const GuideText = styled.div`
   margin-bottom: 30px;
 `;
 
-export const ProfileImg = styled.div`
+export const ProfileButton = styled.button`
+  display: block;
   width: 128px;
   height: 128px;
   overflow: hidden;
   margin: 0px auto 12px auto;
+  border: none;
+  outline: none;
   border-radius: 50%;
   background-image: url(${testProfile});
   background-position: center;
   background-size: cover;
   cursor: pointer;
+`
+
+export const ProfileFile = styled.input`
+  display: none;
 `;
 
-export const ProfileSetInput = styled.input`
+export const NicknameInput = styled.input`
   font-size: 16px;
   font-weight: 400;
   color: ${color.lightGray};
@@ -43,7 +50,7 @@ export const ProfileSetInput = styled.input`
   ::placeholder {
     color: ${color.gray};
   }
-  margin-bottom: 70px;
+  margin-bottom: 65px;
 `;
 
 export const ProfileSetButton = styled.button`
