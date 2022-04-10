@@ -24,6 +24,12 @@ const Modal = () => {
     });
   };
 
+  window.onkeyup= (e) => {
+    if(e.key === "Escape"){
+      navigate("/");
+    }
+  }
+
   return (
     <S.ModalBackground>
       <S.ModalContainer>
@@ -32,12 +38,12 @@ const Modal = () => {
         </S.PositionDiv>
         <Routes>
           <Route
-            path="info"
+            path="/info"
             element={
               <Register change={change} id={id} pw={pw} checkPw={checkPw} />
             }
           />
-          <Route path="profileset" element={<ProfileSet />} />
+          <Route path="/profileset" element={<ProfileSet />} />
         </Routes>
       </S.ModalContainer>
     </S.ModalBackground>
