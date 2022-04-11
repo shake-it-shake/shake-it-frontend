@@ -1,3 +1,4 @@
+import uri from "constance/uri";
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./styled";
