@@ -1,9 +1,23 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./styled";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [input, setInput] = useState({
+    id: "",
+    pw: "",
+  });
+
+  const { id, pw } = input;
+
+  const change = (e: React.FormEvent<HTMLInputElement>) => {
+    const { value, name } = e.currentTarget;
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
 
   return (
     <Fragment>
@@ -11,9 +25,17 @@ const Login = () => {
         <S.LoginImg />
         <S.LoginContainer>
           <S.Title>로그인하고 흔들어보세요</S.Title>
-          <S.LoginInput name="Id" placeholder="아이디" autoComplete="off" />
           <S.LoginInput
-            name="Pw"
+            name="id"
+            value={id}
+            onChange={change}
+            placeholder="아이디"
+            autoComplete="off"
+          />
+          <S.LoginInput
+            name="pw"
+            value={pw}
+            onChange={change}
             placeholder="비밀번호"
             type="password"
             autoComplete="off"
