@@ -24,11 +24,11 @@ const Modal = () => {
     });
   };
 
-  window.onkeyup= (e) => {
-    if(e.key === "Escape"){
+  window.onkeyup = (e) => {
+    if (e.key === "Escape") {
       navigate("/");
     }
-  }
+  };
 
   return (
     <S.ModalBackground>
@@ -43,7 +43,7 @@ const Modal = () => {
               <Register change={change} id={id} pw={pw} checkPw={checkPw} />
             }
           />
-          <Route path="/profileset" element={<ProfileSet />} />
+          <Route path="/profileset" element={<ProfileSet change={change} profile={profile} nickname={nickname}/>} />
         </Routes>
       </S.ModalContainer>
     </S.ModalBackground>
