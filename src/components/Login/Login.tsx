@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "utils/login";
 import * as S from "./styled";
 
 const Login = () => {
@@ -18,6 +19,20 @@ const Login = () => {
       [name]: value,
     });
   };
+
+  const loginReqeust = async () => {
+    const data = {
+      id: id,
+      password: pw,
+    }
+    try {
+      await login(data);
+      navigate("/main");
+    } catch{
+      alert("로그인에 실패하셨습니다.");
+    }
+
+  }
 
   return (
     <Fragment>
@@ -40,7 +55,7 @@ const Login = () => {
             type="password"
             autoComplete="off"
           />
-          <S.LoginButton>로그인</S.LoginButton>
+          <S.LoginButton onClick={loginReqeust}>로그인</S.LoginButton>
           <S.Guide>
             <S.GuideText>계정이 없으신가요?</S.GuideText>
             <S.SignUpText onClick={() => navigate("/signup/info")}>

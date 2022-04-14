@@ -1,4 +1,3 @@
-import uri from "constance/uri";
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { registry } from "utils/register";
@@ -14,7 +13,19 @@ type PropsType = {
 const Register = ({ change, id, pw, checkPw }: PropsType) => {
   const navigate = useNavigate();
 
+  const nullCheck = (data: string) => {
+    if (data || data !== "") {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const registerReqeust = async () => {
+    if (nullCheck(id) || nullCheck(pw)) {
+      alert("아이디와 비밀번호를 확인해주세요!");
+      return;
+    }
     if (pw !== checkPw) {
       alert("비밀번호가 일치하지 않습니다!");
       return;
@@ -24,7 +35,9 @@ const Register = ({ change, id, pw, checkPw }: PropsType) => {
       password: pw,
     };
     try {
+      console.log("sign up", data);
       await registry(data);
+      alert("회원가입이 완료되었습니다.");
       navigate("/signup/profileset");
     } catch {
       alert("회원가입에 실패하셨습니다.");
