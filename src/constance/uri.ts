@@ -1,12 +1,10 @@
 enum uri {
-  signup = "signup/info",
-  profileset = "/signup/profileset",
-  login = "/auth",
-  registry = "/registry",
-  profileGet = "/profile/{user_id}",
-  prifleSet = "/profile",
-  withdrawal = "/leave",
-  refresh = "/refresh",
+  login = "/users/auth",
+  registry = "/users/registry",
+  profileGet = "/users/profile/USER_ID",
+  profleSet = "/users/profile",
+  withdrawal = "/users/leave",
+  refresh = "/users/refresh",
 }
 
 export default uri;
