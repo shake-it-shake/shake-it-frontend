@@ -1,3 +1,4 @@
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { registry } from "utils/register";
@@ -13,17 +14,41 @@ type PropsType = {
 const Register = ({ change, id, pw, checkPw }: PropsType) => {
   const navigate = useNavigate();
 
-  const nullCheck = (data: string) => {
-    if (data || data !== "") {
-      return false;
-    } else {
+  const idCheck = (id: string) => {
+    const idTest = /\s/;
+    if (idTest.test(id)) {
+      alert("아이디에는 공백이 들어갈 수 없습니다.");
       return true;
-    }
+    } else if (id.length <= 7) {
+      alert("아이디는 최소 8자리 이상이어야 합니다.");
+      return true;
+    } else return false;
+  };
+
+  const pwCheck = (password: string) => {
+    const pwTest = /\s/;
+    const specialTest = /\W+/;
+    const numberTest = /\d+/;
+    if (pwTest.test(password)) {
+      alert("비밀번호에는 공백이 들어갈 수 없습니다.");
+      return true;
+    } else if (password.length <= 7) {
+      alert("비밀번호는 최소 8자리 이상이어야 합니다.");
+      return true;
+    } else if (!specialTest.test(password)) {
+      alert("비밀번호에는 특수문자가 최소 1개 이상 포함돼야 합니다.");
+      return true;
+    } else if (!numberTest.test(password)) {
+      alert("비밀번호에는 숫자가 최소 1개 이상 포함돼야 합니다.");
+      return true;
+    } else return false;
   };
 
   const registerReqeust = async () => {
-    if (nullCheck(id) || nullCheck(pw)) {
-      alert("아이디와 비밀번호를 확인해주세요!");
+    if (idCheck(id)) {
+      return;
+    }
+    if (pwCheck(pw)) {
       return;
     }
     if (pw !== checkPw) {
@@ -34,13 +59,19 @@ const Register = ({ change, id, pw, checkPw }: PropsType) => {
       id: id,
       password: pw,
     };
+
     try {
-      console.log("sign up", data);
       await registry(data);
       alert("회원가입이 완료되었습니다.");
       navigate("/signup/profileset");
-    } catch {
-      alert("회원가입에 실패하셨습니다.");
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 409) {
+          alert("중복되는 아이디입니다.");
+        } else {
+          alert("회원가입에 실패했습니다.");
+        }
+      }
     }
   };
 

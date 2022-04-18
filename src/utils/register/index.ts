@@ -7,10 +7,6 @@ interface DataType {
 }
 
 export const registry = (data: DataType) => {
-  try {
-    const response = request.post(uri.registry, data);
-    return response;
-  } catch (error) {
-    Promise.reject(error);
-  }
+  const response = request.post(uri.registry, data);
+  return response;
 };
