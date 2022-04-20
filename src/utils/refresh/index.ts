@@ -3,9 +3,9 @@ import uri from "../../constance/uri";
 import { request } from "../axios";
 
 interface TokenType {
-  access_token: string,
-  refresh_token: string,
-  expired_at: string,
+  access_token: string;
+  refresh_token: string;
+  expired_at: Date;
 }
 
 const getDateWithAddHour = (hour: number) => {
@@ -14,51 +14,47 @@ const getDateWithAddHour = (hour: number) => {
   return date;
 };
 
-const refresh = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
-  const expireAt = localStorage.getItem("expireAt");
+const refresh = async (
+  config: AxiosRequestConfig
+): Promise<AxiosRequestConfig> => {
+  const expireAt = localStorage.getItem("expired_at");
   const refreshToken = localStorage.getItem("refresh_token");
+  let accessToken = localStorage.getItem("access_token");
 
   if (!refreshToken || !expireAt) {
     //리프레시 토큰이 없으면 로그인 상태가 아님
     window.location.href = "/";
-    localStorage.removeItem("expireAt");
+    console.log(2);
+    localStorage.removeItem("expired_at");
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
-
     return config;
   }
 
   if (new Date().getTime() > new Date(expireAt).getTime()) {
-    //엑세스 토큰 만료
+    //어세스 토큰 만료
     const data = {
       refresh_token: refreshToken,
     };
 
-    try {
-      const { access_token, refresh_token } = (await request.put<TokenType>(uri.refresh, data))
-        .data;
+    const { access_token, refresh_token } = (
+      await request.put<TokenType>(uri.refresh, data)
+    ).data;
 
-      localStorage.setItem("access_token", access_token);
-      localStorage.setItem("refresh_token", refresh_token);
-      localStorage.setItem("expireAt", getDateWithAddHour(2).toString());
-    } catch {
-      //리프레시 토큰 만료
-      window.location.href = "/";
-      localStorage.removeItem("expireAt");
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("refresh_token");
-
-      return config;
-    }
+    localStorage.setItem("access_token", access_token);
+    localStorage.setItem("refresh_token", refresh_token);
+    localStorage.setItem("expired_at", getDateWithAddHour(2).toString());
   }
 
-  // config.headers["Authorization"] = `Bearer ${accessToken}`;
+  if (config.headers) {
+    config.headers["Authorization"] = `Bearer ${accessToken}`;
+  }
 
   return config;
 };
 
 const refreshError = (err: any) => {
-  localStorage.removeItem("expireAt");
+  localStorage.removeItem("expired_at");
   localStorage.removeItem("access_token");
   localStorage.removeItem("refresh_token");
 };

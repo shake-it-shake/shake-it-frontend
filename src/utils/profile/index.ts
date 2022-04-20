@@ -1,5 +1,5 @@
 import uri from "constance/uri";
-import { request } from "../axios";
+import instance from "../axios";
 
 type SetDataProps = {
   nickname: string;
@@ -14,21 +14,21 @@ type GetDataProps = {
 };
 
 export const profileSet = async (data: SetDataProps) => {
-  try {
-    const response = await request.patch(uri.profleSet, data);
-    return response;
-  } catch (error) {
-    Promise.reject(error);
-  }
+  const response = await instance.patch(uri.profleSet, data);
+  return response;
 };
 
 export const profileGet = async (userId: string) => {
-  try {
-    const response = await request.get<GetDataProps>(
-      uri.profileGet.replace("USER_ID", userId)
-    );
-    return response;
-  } catch (error) {
-    Promise.reject(error);
-  }
+  const response = await instance.get<GetDataProps>(
+    uri.profileGet.replace("USER_ID", userId)
+  );
+  return response;
+};
+
+export const imgUpload = async (file: File) => {
+  const formdata = new FormData();
+  formdata.append("file", file);
+  const response = await instance.post(uri.images, formdata);
+
+  return response;
 };

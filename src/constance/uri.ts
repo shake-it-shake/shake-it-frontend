@@ -5,6 +5,7 @@ enum uri {
   profleSet = "/users/profile",
   withdrawal = "/users/leave",
   refresh = "/users/refresh",
+  images = "/images",
 }
 
 export default uri;

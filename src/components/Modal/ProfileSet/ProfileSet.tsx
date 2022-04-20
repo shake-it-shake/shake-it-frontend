@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { profileSet } from "utils/profile";
+import { imgUpload, profileSet } from "utils/profile";
 import * as S from "./styled";
 
 interface PropsType {
@@ -14,22 +14,19 @@ const ProfileSet = ({ change, profile, nickname }: PropsType) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const imgRef = useRef<HTMLButtonElement>(null);
 
-  const preview = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const preview = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     if (!e.target.files) return;
 
-    const reader = new FileReader();
     const file = e.target.files[0];
+    const imgLink = await imgUpload(file);
 
-    reader.onload = () => {
-      imgRef.current?.setAttribute(
-        "style",
-        `background-image: url(${reader.result})`
-      );
-    };
-
-    reader.readAsDataURL(file);
+    imgRef.current?.setAttribute(
+      "style",
+      `background-image: url(${imgLink.data.url})`
+    );
+    profile = imgLink.data.url;
   };
 
   const upload = () => {
@@ -48,7 +45,8 @@ const ProfileSet = ({ change, profile, nickname }: PropsType) => {
 
     try {
       await profileSet(data);
-      navigate("/");
+      alert("프로필을 설정했습니다!");
+      navigate("/main");
     } catch {
       alert("프로필 설정을 실패하였습니다.");
     }
@@ -74,6 +72,7 @@ const ProfileSet = ({ change, profile, nickname }: PropsType) => {
         value={nickname}
         onChange={change}
         placeholder="닉네임"
+        maxLength={6}
       />
       <S.ProfileSetButton onClick={profileRequest}>완료</S.ProfileSetButton>
     </>
