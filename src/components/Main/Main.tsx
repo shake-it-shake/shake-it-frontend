@@ -1,7 +1,17 @@
-import React from "react";
+import Card from "./Card/Card";
+import * as S from "./styled";
 
 const Main = () => {
-  return <div>Main</div>;
+  return (
+    <S.Container>
+      <S.GridContainer>
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </S.GridContainer>
+    </S.Container>
+  );
 };
 
 export default Main;
