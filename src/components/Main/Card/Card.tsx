@@ -1,24 +1,55 @@
-import { Fragment } from "react";
+import { RoomType } from "utils/main";
 import * as S from "./styled";
 
-const Card = () => {
+const Card = ({
+  title,
+  id,
+  room_image,
+  personnel,
+  current_count,
+  owner_name,
+  member,
+  created_at,
+}: RoomType) => {
+  const OpenTime = () => {
+    const nowTime = new Date();
+    const createdTime = new Date(created_at.toString().slice(0, -1));
+
+    if (nowTime.getMinutes() <= createdTime.getMinutes() + 10) {
+      return "방금 전 오픈";
+    } else if (nowTime.getHours() - createdTime.getHours() < 1) {
+      return `${nowTime.getMinutes() - createdTime.getMinutes()}분 전 오픈`;
+    } else if (
+      (nowTime.getTime() - createdTime.getTime()) / 1000 / 60 / 60 <
+      24
+    ) {
+      return `${Math.floor(
+        (nowTime.getTime() - createdTime.getTime()) / 1000 / 60 / 60
+      )}시간 전 오픈`;
+    } else {
+      return `${nowTime.getDay() - createdTime.getDay()}일전 오픈`;
+    }
+  };
+
   return (
     <S.CardContainer>
       <S.TopContent>
-        <S.RoomImg />
+        <S.RoomImg img={room_image} />
         <S.RoomInfo>
-          <S.RoomTitle>마지막까지 흔들어볼까요~</S.RoomTitle>
+          <S.RoomTitle>{title}</S.RoomTitle>
           <S.RoomMiddleInfo>
-            <S.RoomHost>이서준</S.RoomHost>
-            <S.Time>30분 전 오픈</S.Time>
+            <S.RoomHost>{owner_name}</S.RoomHost>
+            {OpenTime()}
           </S.RoomMiddleInfo>
           <S.Member>
             <div>
-              <S.MemberImg index="3" left={0} />
-              <S.MemberImg index="2" left={10} />
-              <S.MemberImg index="1" left={20} />
+              <S.MemberImg index="2" left={0} />
+              <S.MemberImg index="1" left={10} />
+              <S.MemberImg index="0" left={20} />
             </div>
-            <S.MemberName>신희원, 이재성 외 4명 참여 중</S.MemberName>
+            <S.MemberName left={20 + 2 * 10 + 8}>
+              {member[0][0]}, {member[0][1]} 외 4명 참여 중
+            </S.MemberName>
           </S.Member>
         </S.RoomInfo>
       </S.TopContent>
@@ -26,8 +57,8 @@ const Card = () => {
         <S.RedGauge />
       </S.Gauge>
       <S.RoomEnterInfo>
-        <S.RoomEnterNum>현재 6명 참여 중</S.RoomEnterNum>
-        <S.RoomMaxNum>정원 12명</S.RoomMaxNum>
+        <S.RoomEnterNum>현재 {current_count}명 참여 중</S.RoomEnterNum>
+        <S.RoomMaxNum>정원 {personnel}명</S.RoomMaxNum>
       </S.RoomEnterInfo>
       <S.EnterButton>입장</S.EnterButton>
     </S.CardContainer>

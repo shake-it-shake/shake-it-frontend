@@ -19,12 +19,15 @@ export const RoomInfo = styled.div`
   flex: 1;
 `;
 
-export const RoomImg = styled.div`
+export const RoomImg = styled.div<{img : string}>`
   width: 80px;
   height: 80px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: ${color.gray};
+  background-image: url(${(props) => props.img});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 export const RoomTitle = styled.div`
@@ -53,8 +56,10 @@ export const Time = styled.div`
 export const Member = styled.div`
   display: flex;
   position: relative;
-  justify-content: space-between;
+  gap: 8px;
 `;
+
+export const Group = styled.div``;
 
 export const MemberImg = styled.div<{ index: string; left: number }>`
   width: 20px;
@@ -67,7 +72,9 @@ export const MemberImg = styled.div<{ index: string; left: number }>`
   border: solid 1px white;
 `;
 
-export const MemberName = styled.div`
+export const MemberName = styled.div<{ left: number }>`
+  position: absolute;
+  left: ${(props) => props.left}px;
   color: ${color.lightGray};
   font-size: 14px;
   font-weight: 400;

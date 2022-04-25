@@ -6,6 +6,7 @@ enum uri {
   withdrawal = "/users/leave",
   refresh = "/users/refresh",
   images = "/images",
+  rooms = "/rooms",
 }
 
 export default uri;
