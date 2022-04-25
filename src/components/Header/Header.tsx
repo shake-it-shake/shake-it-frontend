@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import * as S from "./styled";
 import { friendsIcon, plusIcon, profileIcon } from "assets";
+import { useNavigate } from "react-router-dom";
 
 interface Nav {
   img: string;
@@ -8,6 +9,7 @@ interface Nav {
 }
 
 const Header = () => {
+  const navigate = useNavigate();
   const nav: Nav[] = [
     {
       img: plusIcon,
@@ -37,7 +39,7 @@ const Header = () => {
   return (
     <Fragment>
       <S.HeaderContainer>
-        <S.LogoImg />
+        <S.LogoImg onClick={() => navigate("/")} />
         <S.MenuBar>{navRender}</S.MenuBar>
       </S.HeaderContainer>
     </Fragment>
