@@ -13,7 +13,10 @@ export type RoomType = {
   current_count: number;
   owner_name: string;
   created_at: Date;
-  member: [name: string, profile_path: string];
+  member: {
+    name: string;
+    profile_path: string;
+  }[];
 };
 
 export const getRooms = async () => {

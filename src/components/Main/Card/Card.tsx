@@ -31,6 +31,41 @@ const Card = ({
     }
   };
 
+  const MemberImg = member.map((__, index) => {
+    if (index > 2) return null;
+
+    return (
+      <S.MemberImg
+        key={index}
+        index={-index}
+        left={index * 10}
+        url={member[index].profile_path}
+      />
+    );
+  });
+
+  const MemberName = member.map((value) => value.name);
+  const MemberLeft = () => {
+    let margin = 18;
+    member.map((__) => (margin += 10));
+
+    if (current_count > 4) return 48;
+    return margin;
+  };
+
+  const MemberCount = () => {
+    const count = current_count - 2;
+
+    if (count === -1) {
+      return `${member[0]?.name} 님이 참여 중`;
+    } else if (count === 0) {
+      return `${MemberName.join(",")}님이 참여 중`;
+    } else
+      return `${member[0]?.name}, ${member[1]?.name} 외 ${
+        current_count - 2
+      }명 참여 중`;
+  };
+
   return (
     <S.CardContainer>
       <S.TopContent>
@@ -41,20 +76,14 @@ const Card = ({
             <S.RoomHost>{owner_name}</S.RoomHost>
             {OpenTime()}
           </S.RoomMiddleInfo>
-          <S.Member>
-            <div>
-              <S.MemberImg index="2" left={0} />
-              <S.MemberImg index="1" left={10} />
-              <S.MemberImg index="0" left={20} />
-            </div>
-            <S.MemberName left={20 + 2 * 10 + 8}>
-              {member[0][0]}, {member[0][1]} 외 4명 참여 중
-            </S.MemberName>
+          <S.Member title={MemberName.join(",")}>
+            <div>{MemberImg}</div>
+            <S.MemberName left={MemberLeft()}>{MemberCount()}</S.MemberName>
           </S.Member>
         </S.RoomInfo>
       </S.TopContent>
       <S.Gauge>
-        <S.RedGauge />
+        <S.RedGauge width={(current_count / personnel) * 100} />
       </S.Gauge>
       <S.RoomEnterInfo>
         <S.RoomEnterNum>현재 {current_count}명 참여 중</S.RoomEnterNum>

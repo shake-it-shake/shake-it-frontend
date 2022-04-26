@@ -7,6 +7,7 @@ export const CardContainer = styled.div`
   color: ${color.white};
   border-radius: 16px;
   padding: 23px 24px;
+  z-index: 0;
 `;
 
 export const TopContent = styled.div`
@@ -19,7 +20,7 @@ export const RoomInfo = styled.div`
   flex: 1;
 `;
 
-export const RoomImg = styled.div<{img : string}>`
+export const RoomImg = styled.div<{ img: string }>`
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -59,13 +60,19 @@ export const Member = styled.div`
   gap: 8px;
 `;
 
-export const Group = styled.div``;
-
-export const MemberImg = styled.div<{ index: string; left: number }>`
+export const MemberImg = styled.div<{
+  index: number;
+  left: number;
+  url: string;
+}>`
   width: 20px;
   height: 20px;
   border-radius: 10px;
-  background-color: ${color.gray};
+  background-image: url(${(props) => props.url});
+  background-color: ${color.darkGray};
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   position: absolute;
   z-index: ${(props) => props.index};
   left: ${(props) => props.left}px;
@@ -89,8 +96,8 @@ export const Gauge = styled.div`
   margin-bottom: 20px;
 `;
 
-export const RedGauge = styled.div`
-  width: 50%;
+export const RedGauge = styled.div<{ width: number }>`
+  width: ${(props) => props.width}%;
   height: 8px;
   z-index: 10;
   border-radius: 4px;
