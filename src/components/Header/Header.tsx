@@ -29,7 +29,7 @@ const Header = () => {
     const { img, text } = value;
 
     return (
-      <S.MenuContainer>
+      <S.MenuContainer key={index}>
         <S.MenuImg src={img} alt={text} key={index} />
         <S.MenuName>{text}</S.MenuName>
       </S.MenuContainer>
