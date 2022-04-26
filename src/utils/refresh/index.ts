@@ -3,8 +3,8 @@ import uri from "../../constance/uri";
 import { request } from "../axios";
 
 interface TokenType {
-  access_token: string;
-  refresh_token: string;
+  accessToken: string;
+  refreshToken: string;
   expired_at: Date;
 }
 
@@ -18,13 +18,12 @@ const refresh = async (
   config: AxiosRequestConfig
 ): Promise<AxiosRequestConfig> => {
   const expireAt = localStorage.getItem("expired_at");
-  const refreshToken = localStorage.getItem("refresh_token");
-  let accessToken = localStorage.getItem("access_token");
+  const refresh_token = localStorage.getItem("refresh_token");
+  let access_token = localStorage.getItem("access_token");
 
-  if (!refreshToken || !expireAt) {
+  if (!refresh_token || !expireAt) {
     //리프레시 토큰이 없으면 로그인 상태가 아님
     window.location.href = "/";
-    console.log(2);
     localStorage.removeItem("expired_at");
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
@@ -34,20 +33,24 @@ const refresh = async (
   if (new Date().getTime() > new Date(expireAt).getTime()) {
     //어세스 토큰 만료
     const data = {
-      refresh_token: refreshToken,
+      refresh_token: refresh_token,
     };
 
-    const { access_token, refresh_token } = (
-      await request.put<TokenType>(uri.refresh, data)
+    const { accessToken, refreshToken } = (
+      await request.put<TokenType>(uri.refresh, data, {
+        headers: {
+          "REFRESH-TOKEN": refresh_token,
+        },
+      })
     ).data;
 
-    localStorage.setItem("access_token", access_token);
-    localStorage.setItem("refresh_token", refresh_token);
+    localStorage.setItem("access_token", accessToken);
+    localStorage.setItem("refresh_token", refreshToken);
     localStorage.setItem("expired_at", getDateWithAddHour(2).toString());
   }
 
   if (config.headers) {
-    config.headers["Authorization"] = `Bearer ${accessToken}`;
+    config.headers["Authorization"] = `Bearer ${access_token}`;
   }
 
   return config;
