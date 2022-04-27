@@ -12,23 +12,12 @@ const Card = ({
   created_at,
 }: RoomType) => {
   const OpenTime = () => {
-    const nowTime = new Date();
+    const nowTime = new Date(new Date().toISOString().slice(0, -1));
     const createdTime = new Date(created_at.toString().slice(0, -1));
 
-    if (nowTime.getMinutes() <= createdTime.getMinutes() + 10) {
-      return "방금 전 오픈";
-    } else if (nowTime.getHours() - createdTime.getHours() < 1) {
-      return `${nowTime.getMinutes() - createdTime.getMinutes()}분 전 오픈`;
-    } else if (
-      (nowTime.getTime() - createdTime.getTime()) / 1000 / 60 / 60 <
-      24
-    ) {
-      return `${Math.floor(
-        (nowTime.getTime() - createdTime.getTime()) / 1000 / 60 / 60
-      )}시간 전 오픈`;
-    } else {
-      return `${nowTime.getDay() - createdTime.getDay()}일전 오픈`;
-    }
+    return `${Math.floor(
+      (nowTime.getTime() - createdTime.getTime()) / 60000
+    )}분 전 오픈`;
   };
 
   const MemberImg = member.map((__, index) => {
