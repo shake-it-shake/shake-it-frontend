@@ -7,6 +7,7 @@ export const CardContainer = styled.div`
   color: ${color.white};
   border-radius: 16px;
   padding: 23px 24px;
+  min-width: 0px;
   z-index: 0;
 `;
 
@@ -14,10 +15,13 @@ export const TopContent = styled.div`
   margin-bottom: 26px;
   display: flex;
   gap: 12px;
+  overflow: hidden;
+  min-width: 0px;
 `;
 
 export const RoomInfo = styled.div`
   flex: 1;
+  min-width: 0px;
 `;
 
 export const RoomImg = styled.div<{ img: string }>`
@@ -58,6 +62,8 @@ export const Member = styled.div`
   display: flex;
   position: relative;
   gap: 8px;
+  overflow: hidden;
+  min-width: 0px;
 `;
 
 export const MemberImg = styled.div<{
@@ -79,12 +85,33 @@ export const MemberImg = styled.div<{
   border: solid 1px white;
 `;
 
+export const ImageWrapper = styled.div`
+  display: flex;
+`;
+
+export const ImageContainer = styled.div`
+  width: 10px;
+  height: 20px;
+  &:last-of-type {
+    width: 20px;
+  }
+`;
+
 export const MemberName = styled.div<{ left: number }>`
-  position: absolute;
-  left: ${(props) => props.left}px;
   color: ${color.lightGray};
   font-size: 14px;
   font-weight: 400;
+  min-width: 0px;
+  display: flex;
+  gap: 4px;
+  overflow: hidden;
+`;
+
+export const NameList = styled.div`
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Gauge = styled.div`

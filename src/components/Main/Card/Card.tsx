@@ -11,7 +11,7 @@ const Card = ({
   member,
   created_at,
 }: RoomType) => {
-  const OpenTime = () => {
+  const TimeLag = () => {
     const nowTime = new Date(new Date().toISOString().slice(0, -1));
     const createdTime = new Date(created_at.toString().slice(0, -1));
 
@@ -24,12 +24,13 @@ const Card = ({
     if (index > 2) return null;
 
     return (
-      <S.MemberImg
-        key={index}
-        index={-index}
-        left={index * 10}
-        url={member[index].profile_path}
-      />
+      <S.ImageContainer key={index}>
+        <S.MemberImg
+          index={-index}
+          left={index * 10}
+          url={member[index].profile_path}
+        />
+      </S.ImageContainer>
     );
   });
 
@@ -42,17 +43,15 @@ const Card = ({
     return margin;
   };
 
-  const MemberCount = () => {
-    const count = current_count - 2;
+  const MemberNameList = () => {
+    return `${MemberName.join(",")}`;
+  };
 
-    if (count === -1) {
-      return `${member[0]?.name} 님이 참여 중`;
-    } else if (count === 0) {
-      return `${MemberName.join(",")}님이 참여 중`;
-    } else
-      return `${member[0]?.name}, ${member[1]?.name} 외 ${
-        current_count - 2
-      }명 참여 중`;
+  const MemberJoinText = () => {
+    const count = current_count - 3;
+
+    if (count > 0) return `외 ${current_count - 3}명 참여 중`;
+    else return `참여 중`;
   };
 
   return (
@@ -63,11 +62,14 @@ const Card = ({
           <S.RoomTitle>{title}</S.RoomTitle>
           <S.RoomMiddleInfo>
             <S.RoomHost>{owner_name}</S.RoomHost>
-            {OpenTime()}
+            <S.Time>{TimeLag()}</S.Time>
           </S.RoomMiddleInfo>
-          <S.Member title={MemberName.join(",")}>
-            <div>{MemberImg}</div>
-            <S.MemberName left={MemberLeft()}>{MemberCount()}</S.MemberName>
+          <S.Member title={MemberNameList()}>
+            <S.ImageWrapper>{MemberImg}</S.ImageWrapper>
+            <S.MemberName left={MemberLeft()}>
+              <S.NameList>{MemberNameList()}</S.NameList>
+              <div>{MemberJoinText()}</div>
+            </S.MemberName>
           </S.Member>
         </S.RoomInfo>
       </S.TopContent>
