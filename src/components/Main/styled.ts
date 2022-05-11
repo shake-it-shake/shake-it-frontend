@@ -4,7 +4,7 @@ export const Container = styled.div`
   width: 1280px;
   margin: 0 auto;
   padding-top: 50px;
-` 
+`;
 
 export const GridContainer = styled.div`
   display: grid;
@@ -12,4 +12,4 @@ export const GridContainer = styled.div`
   column-gap: 20px;
   row-gap: 60px;
   width: 100%;
-`
+`;

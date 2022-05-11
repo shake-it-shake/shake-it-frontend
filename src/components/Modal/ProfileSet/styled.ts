@@ -30,7 +30,7 @@ export const ProfileButton = styled.button`
   background-position: center;
   background-size: cover;
   cursor: pointer;
-`
+`;
 
 export const ProfileFile = styled.input`
   display: none;

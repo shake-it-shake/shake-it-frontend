@@ -1,18 +1,20 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { imgUpload, profileSet } from "utils/profile";
 import * as S from "./styled";
 
-interface PropsType {
-  nickname: string;
-  profile: string;
-  change: (e: React.FormEvent<HTMLInputElement>) => void;
-}
-
-const ProfileSet = ({ change, profile, nickname }: PropsType) => {
+const ProfileSet = () => {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const imgRef = useRef<HTMLButtonElement>(null);
+
+  const [profile, setProfile] = useState("");
+  const [nickname, setNickname] = useState("");
+
+  const change = (e: React.FormEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    setNickname(value);
+  };
 
   const preview = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -26,7 +28,7 @@ const ProfileSet = ({ change, profile, nickname }: PropsType) => {
       "style",
       `background-image: url(${imgLink.data.url})`
     );
-    profile = imgLink.data.url;
+    setProfile(imgLink.data.url);
   };
 
   const upload = () => {

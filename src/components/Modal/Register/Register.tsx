@@ -1,18 +1,30 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { Fragment } from "react";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Fragment, useRef, useState } from "react";
 import { registry } from "utils/register";
+import { PortalRef } from "../Portal";
 import * as S from "./styled";
 
-type PropsType = {
-  id: string;
-  pw: string;
-  checkPw: string;
-  change: (e: React.FormEvent<HTMLInputElement>) => void;
-};
+interface PropsType {
+  propsRef1: React.RefObject<PortalRef>;
+  propsRef2: React.RefObject<PortalRef>;
+}
 
-const Register = ({ change, id, pw, checkPw }: PropsType) => {
-  const navigate = useNavigate();
+const Register = ({ propsRef1, propsRef2 }: PropsType): JSX.Element => {
+  const [data, setData] = useState({
+    id: "",
+    pw: "",
+    checkPw: "",
+  });
+
+  const { id, pw, checkPw } = data;
+
+  const change = (e: React.FormEvent<HTMLInputElement>) => {
+    const { value, name } = e.currentTarget;
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
 
   const idCheck = (id: string) => {
     const idTest = /\s/;
@@ -27,6 +39,7 @@ const Register = ({ change, id, pw, checkPw }: PropsType) => {
 
   const pwCheck = (password: string) => {
     const pwTest = /\s/;
+    const stringTest = /[ㄱ-ㅎ|가-힣|a-z|A-Z]+/;
     const specialTest = /\W+/;
     const numberTest = /\d+/;
     if (pwTest.test(password)) {
@@ -34,6 +47,9 @@ const Register = ({ change, id, pw, checkPw }: PropsType) => {
       return true;
     } else if (password.length <= 7) {
       alert("비밀번호는 최소 8자리 이상이어야 합니다.");
+      return true;
+    } else if (!stringTest.test(password)) {
+      alert("문자");
       return true;
     } else if (!specialTest.test(password)) {
       alert("비밀번호에는 특수문자가 최소 1개 이상 포함돼야 합니다.");
@@ -59,11 +75,10 @@ const Register = ({ change, id, pw, checkPw }: PropsType) => {
       id: id,
       password: pw,
     };
-
     try {
       await registry(data);
-      alert("회원가입이 완료되었습니다.");
-      navigate("/signup/profileset");
+      alert("회원가입을 완료했습니다.");
+      handleModal();
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response?.status === 409) {
@@ -73,6 +88,11 @@ const Register = ({ change, id, pw, checkPw }: PropsType) => {
         }
       }
     }
+  };
+
+  const handleModal = () => {
+    propsRef1.current?.close();
+    propsRef2.current?.open();
   };
 
   return (

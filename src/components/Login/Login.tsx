@@ -1,7 +1,10 @@
-import { Fragment, useState } from "react";
+import * as S from "./styled";
+import { Fragment, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "utils/login";
-import * as S from "./styled";
+import Portal, { PortalRef } from "components/Modal/Portal";
+import Register from "components/Modal/Register/Register";
+import ProfileSet from "components/Modal/ProfileSet/ProfileSet";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,15 +27,21 @@ const Login = () => {
     const data = {
       id: id,
       password: pw,
-    }
+    };
     try {
       await login(data);
       navigate("/main");
-    } catch{
+    } catch {
       alert("로그인에 실패하셨습니다.");
     }
+  };
 
-  }
+  const handleModal = () => {
+    portal1Ref.current?.open();
+  };
+
+  const portal1Ref = useRef<PortalRef>(null);
+  const portal2Ref = useRef<PortalRef>(null);
 
   return (
     <Fragment>
@@ -58,12 +67,16 @@ const Login = () => {
           <S.LoginButton onClick={loginReqeust}>로그인</S.LoginButton>
           <S.Guide>
             <S.GuideText>계정이 없으신가요?</S.GuideText>
-            <S.SignUpText onClick={() => navigate("/signup/info")}>
-              회원가입 하기
-            </S.SignUpText>
+            <S.SignUpText onClick={handleModal}>회원가입 하기</S.SignUpText>
           </S.Guide>
         </S.LoginContainer>
       </S.Container>
+      <Portal ref={portal1Ref}>
+        <Register propsRef1={portal1Ref} propsRef2={portal2Ref} />
+      </Portal>
+      <Portal ref={portal2Ref}>
+        <ProfileSet />
+      </Portal>
     </Fragment>
   );
 };
