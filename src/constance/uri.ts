@@ -7,6 +7,8 @@ enum uri {
   refresh = "/users/refresh",
   images = "/images",
   rooms = "/rooms",
+  friends = "/friends",
+  reFriends = "/friends/requests",
 }
 
 export default uri;
