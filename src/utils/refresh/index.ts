@@ -3,8 +3,8 @@ import uri from "../../constance/uri";
 import { request } from "../axios";
 
 interface TokenType {
-  accessToken: string;
-  refreshToken: string;
+  access_token: string;
+  refresh_token: string;
   expired_at: Date;
 }
 
@@ -18,10 +18,10 @@ const refresh = async (
   config: AxiosRequestConfig
 ): Promise<AxiosRequestConfig> => {
   const expireAt = localStorage.getItem("expired_at");
-  const refresh_token = localStorage.getItem("refresh_token");
-  let access_token = localStorage.getItem("access_token");
+  const refreshToken = localStorage.getItem("refresh_token");
+  let accessToken = localStorage.getItem("access_token");
 
-  if (!refresh_token || !expireAt) {
+  if (!refreshToken || !expireAt) {
     //리프레시 토큰이 없으면 로그인 상태가 아님
     alert("로그인을 하신 후, 서비스를 이용할 수 있습니다!");
     window.location.href = "/";
@@ -34,24 +34,27 @@ const refresh = async (
   if (new Date().getTime() > new Date(expireAt).getTime()) {
     //어세스 토큰 만료
     const data = {
-      refresh_token: refresh_token,
+      refresh_token: refreshToken,
     };
 
-    const { accessToken, refreshToken } = (
-      await request.put<TokenType>(uri.refresh, data, {
+    try {
+      const response = await request.put<TokenType>(uri.refresh, data, {
         headers: {
-          "REFRESH-TOKEN": refresh_token,
+          "REFRESH-TOKEN": refreshToken,
         },
-      })
-    ).data;
+      });
+      const { access_token, refresh_token } = response.data;
 
-    localStorage.setItem("access_token", accessToken);
-    localStorage.setItem("refresh_token", refreshToken);
-    localStorage.setItem("expired_at", getDateWithAddHour(2).toString());
+      localStorage.setItem("access_token", access_token);
+      localStorage.setItem("refresh_token", refresh_token);
+      localStorage.setItem("expired_at", getDateWithAddHour(2).toString());
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   if (config.headers) {
-    config.headers["Authorization"] = `Bearer ${access_token}`;
+    config.headers["Authorization"] = `Bearer ${accessToken}`;
   }
 
   return config;
