@@ -32,3 +32,8 @@ export const imgUpload = async (file: File) => {
 
   return response;
 };
+
+export const withdrawal = async () => {
+  const response = await instance.delete(uri.withdrawal);
+  return response;
+};
