@@ -46,8 +46,7 @@ export const Profile = styled.div<{ img: string }>`
   border: none;
   outline: none;
   border-radius: 50%;
-  background-image: url(${testProfile});
-  /* background-image: url(${(props) => props.img}); */
+  background-image: url(${(props) => props.img});
   background-position: center;
   background-size: cover;
 `;
