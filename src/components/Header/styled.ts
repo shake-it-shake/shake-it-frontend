@@ -4,11 +4,15 @@ import { color } from "style/color";
 
 export const HeaderContainer = styled.div`
   width: 100%;
-  height: 102px;
+  height: 112px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid ${color.lightGray};
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: ${color.black};
 `;
 
 export const LogoImg = styled.div`

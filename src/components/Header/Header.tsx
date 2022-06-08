@@ -4,6 +4,8 @@ import { friendsIcon, plusIcon, profileIcon } from "assets";
 import { useNavigate } from "react-router-dom";
 import Portal, { PortalRef } from "components/Modal/Portal";
 import MakeRoom from "components/Modal/MakeRoom/MakeRoom";
+import Profile from "components/Modal/Profile/Profile";
+import Friends from "components/Modal/Friends/Friends";
 
 interface Nav {
   img: string;
@@ -49,17 +51,17 @@ const Header = () => {
   return (
     <Fragment>
       <S.HeaderContainer>
-        <S.LogoImg onClick={() => navigate("/")} />
+        <S.LogoImg onClick={() => navigate("/main")} />
         <S.MenuBar>{navRender}</S.MenuBar>
       </S.HeaderContainer>
       <Portal ref={portal1Ref}>
         <MakeRoom />
       </Portal>
       <Portal ref={portal2Ref}>
-        <div>hello world! this is modal 2</div>
+        <Profile />
       </Portal>
       <Portal ref={portal3Ref}>
-        <div>hello world! this is modal 3</div>
+        <Friends />
       </Portal>
     </Fragment>
   );
