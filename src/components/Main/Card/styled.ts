@@ -82,7 +82,6 @@ export const MemberImg = styled.div<{
   position: absolute;
   z-index: ${(props) => props.index};
   left: ${(props) => props.left}px;
-  border: solid 1px white;
 `;
 
 export const ImageWrapper = styled.div`
