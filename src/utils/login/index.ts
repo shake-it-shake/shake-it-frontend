@@ -21,6 +21,7 @@ const getDateWithAddHour = (hour: number) => {
 export const login = async (data: DataType) => {
   const response = await request.post<TokenType>(uri.login, data);
 
+  localStorage.setItem("user_id", data.id);
   localStorage.setItem("access_token", response.data.access_token);
   localStorage.setItem("refresh_token", response.data.refresh_token);
   localStorage.setItem("expired_at", getDateWithAddHour(2).toString());
