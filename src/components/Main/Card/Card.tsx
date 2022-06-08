@@ -8,7 +8,7 @@ const Card = ({
   personnel,
   current_count,
   owner_name,
-  member,
+  members,
   created_at,
 }: RoomType) => {
   const TimeLag = () => {
@@ -20,7 +20,7 @@ const Card = ({
     )}분 전 오픈`;
   };
 
-  const MemberImg = member.map((__, index) => {
+  const MemberImg = members.map((__, index) => {
     if (index > 2) return null;
 
     return (
@@ -28,16 +28,16 @@ const Card = ({
         <S.MemberImg
           index={-index}
           left={index * 10}
-          url={member[index].profile_path}
+          url={members[index].profile_path}
         />
       </S.ImageContainer>
     );
   });
 
-  const MemberName = member.map((value) => value.name);
+  const MemberName = members.map((value) => value.name);
   const MemberLeft = () => {
     let margin = 18;
-    member.map((__) => (margin += 10));
+    members.map((__) => (margin += 10));
 
     if (current_count > 4) return 48;
     return margin;

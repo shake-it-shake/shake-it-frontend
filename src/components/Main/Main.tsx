@@ -23,7 +23,7 @@ const Main = () => {
     const {
       id,
       title,
-      member,
+      members,
       personnel,
       room_image,
       current_count,
@@ -34,7 +34,7 @@ const Main = () => {
       <Card
         id={id}
         title={title}
-        member={member}
+        members={members}
         personnel={personnel}
         room_image={room_image}
         current_count={current_count}
