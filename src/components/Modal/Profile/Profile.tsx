@@ -7,13 +7,17 @@ const Profile = () => {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const imgRef = useRef<HTMLButtonElement>(null);
+
   const [isModify, setIsModify] = useState<boolean>(false);
+
   const [nickname, setNickname] = useState<string>("");
-  const [profileData, setProfileData] = useState({
-    id: "",
-    image_path: "",
-    nickname: "",
-  });
+  const [profileImg, setProfileImg] = useState<string>("");
+  const [beforeName, setBeforeName] = useState<string>("");
+  const [beforeImg, setBeforeImg] = useState<string>("");
+
+  const change = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+  };
 
   useEffect(() => {
     getProfile();
@@ -24,17 +28,12 @@ const Profile = () => {
 
     if (userId) {
       const responseData = await profileGet(userId);
-      setProfileData({
-        id: responseData.data.id,
-        image_path: responseData.data.image_path,
-        nickname: responseData.data.nickname,
-      });
+      setNickname(responseData.data.nickname);
+      setProfileImg(responseData.data.image_path);
+      setBeforeName(responseData.data.nickname);
+      setBeforeImg(responseData.data.image_path);
     }
   };
-
-  useEffect(() => {
-    setNickname(profileData.nickname);
-  }, [profileData.nickname]);
 
   const logout = () => {
     if (window.confirm("로그아웃하시겠습니까?")) {
@@ -47,9 +46,14 @@ const Profile = () => {
   const confirmAlert = async () => {
     if (window.confirm("탈퇴하시겠습니까?")) {
       await withdrawal();
+      localStorage.clear();
       alert("탈퇴 되었습니다.");
       navigate("/");
     }
+  };
+
+  const upload = () => {
+    inputRef.current?.click();
   };
 
   const preview = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,10 +68,7 @@ const Profile = () => {
       "style",
       `background-image: url(${imgLink.data.url})`
     );
-  };
-
-  const upload = () => {
-    inputRef.current?.click();
+    setProfileImg(imgLink.data.url);
   };
 
   const clickButton = () => {
@@ -78,13 +79,13 @@ const Profile = () => {
   };
 
   const profileRequest = async () => {
-    if (profileData.nickname === null || profileData.nickname === "") {
-      alert("닉네임을 설정해주세요");
+    if (nickname === beforeName && profileImg === beforeImg) {
       return;
     }
+
     const data = {
-      nickname: profileData.nickname,
-      image_path: profileData.image_path,
+      nickname: nickname,
+      image_path: profileImg,
     };
 
     try {
@@ -96,14 +97,10 @@ const Profile = () => {
     }
   };
 
-  const change = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
-  };
-
   return (
     <S.Container>
       <S.ProfileButton
-        img={profileData.image_path}
+        img={profileImg}
         ref={imgRef}
         onClick={upload}
         events={isModify ? "auto" : "none"}
