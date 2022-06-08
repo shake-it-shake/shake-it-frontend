@@ -6,18 +6,20 @@ type RoomsType = {
 };
 
 export type RoomType = {
-  id: number;
+  id: string;
   title: string;
   room_image: string;
   personnel: number;
   current_count: number;
   owner_name: string;
   created_at: Date;
-  member: {
-    name: string;
-    profile_path: string;
-  }[];
+  members: Member[];
 };
+
+export type Member = {
+  name: string,
+  profile_path: string,
+}
 
 export const getRooms = async () => {
   const response = await instance.get<RoomsType>(uri.rooms);
