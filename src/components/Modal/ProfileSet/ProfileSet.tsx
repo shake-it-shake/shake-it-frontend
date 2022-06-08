@@ -11,9 +11,8 @@ const ProfileSet = () => {
   const [profile, setProfile] = useState("");
   const [nickname, setNickname] = useState("");
 
-  const change = (e: React.FormEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget;
-    setNickname(value);
+  const change = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
   };
 
   const preview = async (e: React.ChangeEvent<HTMLInputElement>) => {
