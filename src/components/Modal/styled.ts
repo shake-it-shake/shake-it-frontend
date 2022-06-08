@@ -19,7 +19,7 @@ export const ModalBackground = styled.div`
 export const ModalContainer = styled.div`
   background-color: ${color.lightBlack};
   width: 436px;
-  border-radius: 12px;
+  border-radius: 30px;
   padding: 40px 50px;
 `;
 
