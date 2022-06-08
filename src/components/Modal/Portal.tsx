@@ -21,11 +21,20 @@ const Portal = forwardRef<PortalRef, PortalPropsType>(({ children }, ref) => {
   const el = document.getElementById("modal");
   const [isOpen, setIsOpen] = useState(false);
 
-  const open = useCallback(() => setIsOpen(true), []);
-  const close = useCallback(() => setIsOpen(false), []);
+  const open = useCallback(() => {
+    document.body.style.overflow = "hidden";
+    setIsOpen(true);
+  }, []);
+  const close = useCallback(() => {
+    
+    document.body.style.overflow = "unset";
+    setIsOpen(false);
+  }, []);
 
   const keyClose = (e: KeyboardEvent) => {
-    if (e.keyCode === 27) {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      e.stopPropagation();
       close();
     }
   };
