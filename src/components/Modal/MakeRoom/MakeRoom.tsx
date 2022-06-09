@@ -21,7 +21,7 @@ const MakeRoom = () => {
   };
 
   const makeLine = () => {
-    const val = (Number(input.personnel) - 2) * 10;
+    const val = (Number(input.personnel) - 2) * 16;
     return val;
   };
 
@@ -84,18 +84,18 @@ const MakeRoom = () => {
         value={input.roomTitle}
         onChange={change}
         autoComplete="off"
-        maxLength={12}
+        maxLength={8}
       />
       <S.SubTitle>최대 인원</S.SubTitle>
       <S.GageNum>
         <S.GageFigure>2</S.GageFigure>
-        <S.GageFigure>12</S.GageFigure>
+        <S.GageFigure>8</S.GageFigure>
       </S.GageNum>
       <S.GageBar
         type="range"
         name="personnel"
         min={2}
-        max={12}
+        max={8}
         value={input.personnel}
         onChange={change}
         val={makeLine()}
