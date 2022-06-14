@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { RoomType } from "utils/main";
 import * as S from "./styled";
 
@@ -11,6 +12,7 @@ const Card = ({
   members,
   created_at,
 }: RoomType) => {
+  const navigate = useNavigate();
   const TimeLag = () => {
     const nowTime = new Date(new Date().toISOString().slice(0, -1));
     const createdTime = new Date(created_at.toString().slice(0, -1));
@@ -80,7 +82,7 @@ const Card = ({
         <S.RoomEnterNum>현재 {current_count}명 참여 중</S.RoomEnterNum>
         <S.RoomMaxNum>정원 {personnel}명</S.RoomMaxNum>
       </S.RoomEnterInfo>
-      <S.EnterButton>입장</S.EnterButton>
+      <S.EnterButton onClick={()=> navigate(`/room/${id}`)}>입장</S.EnterButton>
     </S.CardContainer>
   );
 };

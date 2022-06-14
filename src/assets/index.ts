@@ -5,3 +5,8 @@ export { default as closeIcon } from "./closeIcon.svg";
 export { default as discoBacll } from "./discoBall.svg";
 export { default as login } from "./login.svg";
 export { default as testProfile } from "./testProfile.png";
+export { default as cam } from "./Room/cam.svg";
+export { default as mic} from "./Room/mic.svg";
+export { default as noneRedCam} from "./Room/noneCamRed.svg";
+export { default as noneWhiteCam} from "./Room/noneCamWhite.svg";
+export { default as noneRedMic} from "./Room/noneMicRed.svg";

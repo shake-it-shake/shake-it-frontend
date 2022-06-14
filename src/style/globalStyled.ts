@@ -83,7 +83,8 @@ export const reset = css`
   mark,
   audio,
   video,
-  input {
+  input,
+  textarea {
     margin: 0;
     padding: 0;
     border: 0;
