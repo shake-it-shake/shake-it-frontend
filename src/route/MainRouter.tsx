@@ -7,7 +7,7 @@ const MainRouter: FC = (): JSX.Element => {
     <Routes>
       <Route path="/" element={<LoginContainer />} />
       <Route path="/main" element={<MainContainer />} />
-      <Route path="/room/:roomid" element={<RoomContainer />} />
+      <Route path="/room/:roomId" element={<RoomContainer />} />
     </Routes>
   );
 };
