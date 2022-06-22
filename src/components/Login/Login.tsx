@@ -1,10 +1,11 @@
 import * as S from "./styled";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "utils/login";
 import Portal, { PortalRef } from "components/Modal/Portal";
 import Register from "components/Modal/Register/Register";
 import ProfileSet from "components/Modal/ProfileSet/ProfileSet";
+import { refresh } from "utils/refresh";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,6 +15,13 @@ const Login = () => {
   });
 
   const { id, pw } = input;
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      navigate("/main");
+    }
+  }, []);
 
   const change = (e: React.FormEvent<HTMLInputElement>) => {
     const { value, name } = e.currentTarget;
