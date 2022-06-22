@@ -1,14 +1,68 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./styled";
 import { cam, noneRedCam, mic, noneRedMic, noneWhiteCam } from "assets";
+import { useNavigate, useParams } from "react-router-dom";
+import { makeAttendee } from "utils/room";
+import {
+  ActiveSpeakerPolicy,
+  EventController,
+  MeetingSessionConfiguration,
+} from "amazon-chime-sdk-js";
+import {
+  DeviceLabels,
+  DeviceLabelTrigger,
+  useMeetingManager,
+  useLocalVideo,
+  VideoTileGrid,
+  LocalVideo,
+  VideoTile,
+} from "amazon-chime-sdk-component-library-react";
+
+interface MeetingManagerJoinOptions {
+  deviceLabels?: DeviceLabels | DeviceLabelTrigger;
+  eventController?: EventController;
+  enableWebAudio?: boolean;
+  activeSpeakerPolicy?: ActiveSpeakerPolicy;
+}
 
 const Room = () => {
+  const { toggleVideo } = useLocalVideo();
   const [isMic, setIsMic] = useState<boolean>(true);
   const [isCam, setIsCam] = useState<boolean>(true);
   const [micValue, setMicValue] = useState<number>(50);
+  const navigate = useNavigate();
+  const params = useParams();
 
-  const change = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMicValue(Number(e.target.value));
+  const meetingManager = useMeetingManager();
+
+  useEffect(() => {
+    setChime();
+  }, []);
+
+  const setChime = async () => {
+    const data = (await makeAttendee(String(params.roomId))).data;
+    const meetingData = data.Meeting;
+    const attendeeData = data.Attendance;
+
+    console.log(attendeeData, meetingData);
+
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(
+      meetingData,
+      attendeeData
+    );
+
+    // const options: MeetingManagerJoinOptions = {
+    //   deviceLabels: DeviceLabels.Video,
+    // };
+
+    // await meetingManager.join(meetingSessionConfiguration, options);
+    await meetingManager.join(meetingSessionConfiguration);
+    await meetingManager.start();
+  };
+
+  const leaveRoom = async () => {
+    await meetingManager.leave();
+    navigate("/main");
   };
 
   useEffect(() => {
@@ -20,10 +74,10 @@ const Room = () => {
   }, [micValue]);
 
   const micHandle = () => {
-    if(isMic){
+    if (isMic) {
       setMicValue(0);
     }
-    
+
     setIsMic(!isMic);
   };
 
@@ -31,20 +85,16 @@ const Room = () => {
     setIsCam(!isCam);
   };
 
+  const change = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMicValue(Number(e.target.value));
+  };
 
   return (
     <S.Container>
       <S.CamContainer>
         <S.Cams>
           <S.GridContainer2>
-            <S.Cam2>12</S.Cam2>
-            <S.Cam2>12</S.Cam2>
-            <S.Cam2>12</S.Cam2>
-            <S.Cam2>12</S.Cam2>
-            <S.Cam2>12</S.Cam2>
-            <S.Cam2>12</S.Cam2>
-            <S.Cam2>12</S.Cam2>
-            <S.Cam2>12</S.Cam2>
+            <VideoTile nameplate="test"/>
           </S.GridContainer2>
         </S.Cams>
         <S.Controller>
@@ -61,7 +111,7 @@ const Room = () => {
             />
             <S.BottomCam onClick={camHandle} cam={isCam ? cam : noneRedCam} />
           </S.ControllerLeft>
-          <S.ExitButton>방 나가기</S.ExitButton>
+          <S.ExitButton onClick={leaveRoom}>방 나가기</S.ExitButton>
         </S.Controller>
       </S.CamContainer>
       <S.Chat>

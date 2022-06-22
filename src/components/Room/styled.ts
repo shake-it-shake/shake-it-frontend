@@ -1,4 +1,5 @@
-import styled from "@emotion/styled";
+import styled from "styled-components";
+import { VideoTileGrid } from "amazon-chime-sdk-component-library-react";
 import { color } from "style/color";
 
 export const Container = styled.div`
@@ -29,7 +30,7 @@ export const GridContainer1 = styled.div`
   width: 100%;
 `;
 
-export const GridContainer2 = styled.div`
+export const GridContainer2 = styled(VideoTileGrid)`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
