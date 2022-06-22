@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { VideoTileGrid } from "amazon-chime-sdk-component-library-react";
+import { VideoGrid, VideoTile } from "amazon-chime-sdk-component-library-react";
 import { color } from "style/color";
 
 export const Container = styled.div`
@@ -7,50 +7,45 @@ export const Container = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
-`;
-
-export const CamContainer = styled.div`
-  flex: 7.5 1 0;
-  display: flex;
   flex-direction: column;
 `;
 
-export const Cams = styled.div`
-  flex: 9 1 0;
-  width: 1280px;
+export const CamContainer = styled.div`
+  flex: 10 1 0;
   margin: 0 auto;
   display: flex;
   align-items: center;
 `;
 
-export const GridContainer1 = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  width: 100%;
+export const MarginContainer = styled.div`
+  width: 1280px;
+  height: 720px;
+  background-color: grey;
+  display: flex;
 `;
+export const CamWrap = styled.div`
+  width: 1280px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: transparent;
+`;  
 
-export const GridContainer2 = styled(VideoTileGrid)`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  width: 100%;
-`;
-
-export const Cam1 = styled.div`
-  width: 632px;
-  height: 355px;
+export const BigCam = styled(VideoTile)`
+  width: 624px;
+  height: 351px;
   border: solid 1px ${color.white};
 `;
 
-export const Cam2 = styled.div`
+export const SmallCam = styled(VideoTile)`
   width: 416px;
   height: 234px;
   border: solid 1px ${color.white};
 `;
 
 export const Controller = styled.div`
-  flex: 1 1 0;
+  width: 100%;
+  padding: 1em 0 1em 0;
   border-top: solid 1px ${color.lightBlack};
   display: flex;
   justify-content: space-between;
@@ -129,43 +124,4 @@ export const SendButton = styled.div`
   border-radius: 8px;
   cursor: pointer;
   margin-right: 0.1rem;
-`;
-
-export const Chat = styled.div`
-  flex: 2 1 0;
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: flex-end;
-  padding: 27px 1em;
-  background-color: ${color.lightBlack};
-`;
-
-export const Input = styled.textarea`
-  border: solid 1px ${color.white};
-  border-radius: 10px;
-  padding-top: 18px;
-  padding-left: 15px;
-  width: 100%;
-  color: ${color.white};
-  outline: none;
-  margin-bottom: 15px;
-  background: transparent;
-  ::placeholder {
-    color: ${color.darkWhite};
-  }
-  margin-top: 5px;
-  resize: none;
-`;
-
-export const ContentContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 15px;
-  margin-bottom: 20px;
-`;
-
-export const ChatContent = styled.div`
-  color: ${color.white};
 `;
