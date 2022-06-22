@@ -16,6 +16,7 @@ import {
   VideoTileGrid,
   LocalVideo,
   VideoTile,
+  VideoGrid,
 } from "amazon-chime-sdk-component-library-react";
 
 interface MeetingManagerJoinOptions {
@@ -89,12 +90,22 @@ const Room = () => {
     setMicValue(Number(e.target.value));
   };
 
+  const tiles = new Array(7).fill(0).map((_, index) => {
+    return (
+      <VideoTile
+        style={{ border: "solid 1px grey" }}
+        nameplate={String(index)}
+        key={index}
+      />
+    );
+  });
+
   return (
     <S.Container>
       <S.CamContainer>
         <S.Cams>
           <S.GridContainer2>
-            <VideoTile nameplate="test"/>
+            <VideoGrid>{tiles}</VideoGrid>
           </S.GridContainer2>
         </S.Cams>
         <S.Controller>
