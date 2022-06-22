@@ -1,4 +1,5 @@
 import { Fragment, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { imgUpload } from "utils/profile";
 import { makeRoom } from "utils/room";
 import * as S from "./styled";
@@ -11,6 +12,7 @@ const MakeRoom = () => {
   });
   const imgRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const change = (e: React.FormEvent<HTMLInputElement>) => {
     const { value, name } = e.currentTarget;
@@ -59,10 +61,9 @@ const MakeRoom = () => {
       image_path: input.roomImage,
     };
 
-
     try {
-      const roomId = await makeRoom(data);
-      console.log("성공");
+      const meetingData = (await makeRoom(data)).data;
+      navigate(`/room/${meetingData.Meeting.MeetingId}`);
     } catch (error) {
       alert("클럽사진 혹은 클럽명을 확인해주세요.");
       console.log(error);
