@@ -9,6 +9,7 @@ enum uri {
   rooms = "/rooms",
   friends = "/friends",
   reFriends = "/friends/requests",
+  attendee = "/rooms/attendance",
 }
 
 export default uri;

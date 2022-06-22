@@ -22,7 +22,6 @@ const refresh = async (
   let accessToken = localStorage.getItem("access_token");
 
   if (!refreshToken || !expireAt) {
-    //리프레시 토큰이 없으면 로그인 상태가 아님
     alert("로그인을 하신 후, 서비스를 이용할 수 있습니다!");
     window.location.href = "/";
     localStorage.removeItem("expired_at");
@@ -32,7 +31,6 @@ const refresh = async (
   }
 
   if (new Date().getTime() > new Date(expireAt).getTime()) {
-    //어세스 토큰 만료
     const data = {
       refresh_token: refreshToken,
     };
