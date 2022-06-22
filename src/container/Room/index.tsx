@@ -1,11 +1,11 @@
+import { MeetingProvider } from "amazon-chime-sdk-component-library-react";
 import Room from "components/Room/Room";
-import { Fragment } from "react";
 
 const RoomContainer = () => {
   return (
-    <Fragment>
+    <MeetingProvider>
       <Room />
-    </Fragment>
+    </MeetingProvider>
   );
 };
 
