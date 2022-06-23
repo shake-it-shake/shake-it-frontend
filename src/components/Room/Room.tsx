@@ -6,10 +6,10 @@ import { makeAttendee } from "utils/room";
 import { MeetingSessionConfiguration } from "amazon-chime-sdk-js";
 import {
   LocalVideo,
-  RosterAttendeeType,
   useLocalVideo,
   useMeetingManager,
   useRosterState,
+  useToggleLocalMute,
 } from "amazon-chime-sdk-component-library-react";
 
 const Room = () => {
@@ -19,13 +19,25 @@ const Room = () => {
   const navigate = useNavigate();
   const params = useParams();
 
+  const { toggleVideo, isVideoEnabled } = useLocalVideo();
   const { roster } = useRosterState();
   const attendee = Object.values(roster);
   const meetingManager = useMeetingManager();
+  const { toggleMute } = useToggleLocalMute();
 
   useEffect(() => {
     setChime();
   }, []);
+
+  useEffect(() => {
+    async function toggle() {
+      if (!isVideoEnabled && meetingManager.meetingStatus === 1) {
+        await toggleVideo();
+      }
+    }
+
+    toggle();
+  }, [isVideoEnabled, meetingManager.meetingStatus]);
 
   const setChime = async () => {
     const data = (await makeAttendee(String(params.roomId))).data;
@@ -75,7 +87,7 @@ const Room = () => {
   };
 
   const tiles = attendee.map((data, index) => {
-    console.log(data);
+    console.log("asdd", data);
     if (attendee.length <= 4) {
       return <S.SmallCam nameplate={data.name} key={index} />;
     } else {
@@ -86,6 +98,7 @@ const Room = () => {
   return (
     <S.Container>
       <S.CamContainer>
+        <LocalVideo />
         <S.CamWrap>{tiles}</S.CamWrap>
       </S.CamContainer>
       <S.Controller>
