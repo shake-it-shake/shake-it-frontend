@@ -1,3 +1,4 @@
+import { defalutRoomImg } from "assets";
 import { Fragment, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { imgUpload } from "utils/profile";

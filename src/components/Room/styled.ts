@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import { VideoGrid, VideoTile } from "amazon-chime-sdk-component-library-react";
+import {
+  LocalVideo,
+  RemoteVideo,
+} from "amazon-chime-sdk-component-library-react";
 import { color } from "style/color";
 
 export const Container = styled.div`
@@ -29,15 +32,27 @@ export const CamWrap = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   background-color: transparent;
-`;  
+`;
 
-export const BigCam = styled(VideoTile)`
+export const BigMyCam = styled(LocalVideo)`
   width: 624px;
   height: 351px;
   border: solid 1px ${color.white};
 `;
 
-export const SmallCam = styled(VideoTile)`
+export const SmallMyCam = styled(LocalVideo)`
+  width: 416px;
+  height: 234px;
+  border: solid 1px ${color.white};
+`;
+
+export const BigCam = styled(RemoteVideo)`
+  width: 624px;
+  height: 351px;
+  border: solid 1px ${color.white};
+`;
+
+export const SmallCam = styled(RemoteVideo)`
   width: 416px;
   height: 234px;
   border: solid 1px ${color.white};

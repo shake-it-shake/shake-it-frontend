@@ -6,6 +6,7 @@ interface TokenType {
   access_token: string;
   refresh_token: string;
   expired_at: Date;
+  user_id: string;
 }
 
 const getDateWithAddHour = (hour: number) => {
@@ -19,6 +20,7 @@ const refresh = async (
 ): Promise<AxiosRequestConfig> => {
   const expireAt = localStorage.getItem("expired_at");
   const refreshToken = localStorage.getItem("refresh_token");
+  const user_id = localStorage.getItem("user_id");
   let accessToken = localStorage.getItem("access_token");
 
   if (!refreshToken || !expireAt) {
@@ -27,6 +29,7 @@ const refresh = async (
     localStorage.removeItem("expired_at");
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user_id");
     return config;
   }
 
@@ -41,10 +44,11 @@ const refresh = async (
           "REFRESH-TOKEN": refreshToken,
         },
       });
-      const { access_token, refresh_token } = response.data;
+      const { access_token, refresh_token, user_id } = response.data;
 
       localStorage.setItem("access_token", access_token);
       localStorage.setItem("refresh_token", refresh_token);
+      localStorage.setItem("user_id", user_id);
       localStorage.setItem("expired_at", getDateWithAddHour(2).toString());
     } catch (error) {
       console.log(error);
@@ -62,6 +66,7 @@ const refreshError = (err: any) => {
   localStorage.removeItem("expired_at");
   localStorage.removeItem("access_token");
   localStorage.removeItem("refresh_token");
+  localStorage.removeItem("user_id");
 };
 
 export { refresh, refreshError };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as S from "./styled";
-import { cam, noneRedCam, mic, noneRedMic, noneWhiteCam } from "assets";
+import { mic, noneRedMic } from "assets";
 import { useNavigate, useParams } from "react-router-dom";
 import { makeAttendee } from "utils/room";
 import { MeetingSessionConfiguration } from "amazon-chime-sdk-js";
@@ -9,12 +9,10 @@ import {
   useLocalVideo,
   useMeetingManager,
   useRosterState,
-  useToggleLocalMute,
 } from "amazon-chime-sdk-component-library-react";
 
 const Room = () => {
   const [isMic, setIsMic] = useState<boolean>(true);
-  const [isCam, setIsCam] = useState<boolean>(true);
   const [micValue, setMicValue] = useState<number>(50);
   const navigate = useNavigate();
   const params = useParams();
@@ -23,7 +21,6 @@ const Room = () => {
   const { roster } = useRosterState();
   const attendee = Object.values(roster);
   const meetingManager = useMeetingManager();
-  const { toggleMute } = useToggleLocalMute();
 
   useEffect(() => {
     setChime();
@@ -50,12 +47,7 @@ const Room = () => {
 
     await meetingManager.join(meetingSessionConfiguration);
     await meetingManager.start();
-    await meetingManager.audioVideo?.startLocalVideoTile();
   };
-
-  useEffect(() => {
-    console.log(attendee);
-  }, [roster]);
 
   const leaveRoom = async () => {
     await meetingManager.leave();
@@ -78,28 +70,31 @@ const Room = () => {
     setIsMic(!isMic);
   };
 
-  const camHandle = () => {
-    setIsCam(!isCam);
-  };
-
   const change = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMicValue(Number(e.target.value));
   };
 
-  const tiles = attendee.map((data, index) => {
-    console.log("asdd", data);
-    if (attendee.length <= 4) {
-      return <S.SmallCam nameplate={data.name} key={index} />;
+  const cams = attendee.map((data, index) => {
+    const myId = localStorage.getItem("user_id");
+    if (data.externalUserId === myId) {
+      if (attendee.length > 4) {
+        return <S.SmallMyCam key={index} />;
+      } else {
+        return <S.BigMyCam key={index} />;
+      }
     } else {
-      return <S.BigCam nameplate={String(index)} key={index} />;
+      if (attendee.length > 4) {
+        return <S.SmallMyCam key={index} />;
+      } else {
+        return <S.BigCam key={index} tileId={index} />;
+      }
     }
   });
 
   return (
     <S.Container>
       <S.CamContainer>
-        <LocalVideo />
-        <S.CamWrap>{tiles}</S.CamWrap>
+        <S.CamWrap>{cams}</S.CamWrap>
       </S.CamContainer>
       <S.Controller>
         <S.ControllerLeft>
@@ -113,7 +108,6 @@ const Room = () => {
             onChange={change}
             name="micValue"
           />
-          <S.BottomCam onClick={camHandle} cam={isCam ? cam : noneRedCam} />
         </S.ControllerLeft>
         <S.ExitButton onClick={leaveRoom}>방 나가기</S.ExitButton>
       </S.Controller>
