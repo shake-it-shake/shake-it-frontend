@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { testProfile } from "assets";
+import { defalutRoomImg } from "assets";
 import { color } from "style/color";
 
 export const RoomImg = styled.button`
@@ -11,7 +11,7 @@ export const RoomImg = styled.button`
   border: none;
   outline: none;
   border-radius: 50%;
-  background-image: url(${testProfile});
+  background-image: url(${defalutRoomImg});
   background-position: center;
   background-size: cover;
   cursor: pointer;

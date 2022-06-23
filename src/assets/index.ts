@@ -10,3 +10,4 @@ export { default as mic} from "./Room/mic.svg";
 export { default as noneRedCam} from "./Room/noneCamRed.svg";
 export { default as noneWhiteCam} from "./Room/noneCamWhite.svg";
 export { default as noneRedMic} from "./Room/noneMicRed.svg";
+export { default as defalutRoomImg } from "./defaultRoom.svg";
