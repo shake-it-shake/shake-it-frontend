@@ -8,7 +8,8 @@ const MakeRoom = () => {
   const [input, setInput] = useState({
     roomTitle: "",
     personnel: 2,
-    roomImage: "",
+    roomImage:
+      "https://shakeit-image.s3.ap-northeast-2.amazonaws.com/pre-process/undefined/jpg_9dc5a237-8da4-4892-b9bf-c961a21e6db3.jpg",
   });
   const imgRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -60,7 +61,6 @@ const MakeRoom = () => {
       personnel: Number(input.personnel),
       image_path: input.roomImage,
     };
-
     try {
       const meetingData = (await makeRoom(data)).data;
       navigate(`/room/${meetingData.Meeting.MeetingId}`);
