@@ -86,7 +86,7 @@ const MakeRoom = () => {
         value={input.roomTitle}
         onChange={change}
         autoComplete="off"
-        maxLength={8}
+        maxLength={20}
       />
       <S.SubTitle>최대 인원</S.SubTitle>
       <S.GageNum>

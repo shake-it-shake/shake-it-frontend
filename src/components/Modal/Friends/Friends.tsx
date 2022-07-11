@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   acceptFriends,
   deleteFriends,
@@ -10,6 +11,7 @@ import {
 import * as S from "./styled";
 
 const Friends = () => {
+  const navigate = useNavigate();
   const [id, setId] = useState<string>("");
   const [friendsList, setList] = useState<FriendsListType | null>(null);
   const [reFriendsList, setReList] = useState<ReFriendsListType | null>(null);
@@ -47,7 +49,12 @@ const Friends = () => {
   };
 
   const followFriend = async (room_id: string) => {
-    console.log(room_id);
+    if(!room_id){
+      alert("접속중인 방이 존재하지 않습니다.");
+      return;
+    }
+
+    navigate(`/room/${room_id}`);
   };
 
   const deleteFriend = async (user_id: string) => {
