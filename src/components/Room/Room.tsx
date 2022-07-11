@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import * as S from "./styled";
 import { mic, noneRedMic } from "assets";
 import { useNavigate, useParams } from "react-router-dom";
-import { makeAttendee } from "utils/room";
+import { makeAttendee, leaveRoom } from "utils/room";
 import { MeetingSessionConfiguration } from "amazon-chime-sdk-js";
 import {
-  LocalVideo,
   useLocalVideo,
   useMeetingManager,
   useRosterState,
@@ -49,8 +48,10 @@ const Room = () => {
     await meetingManager.start();
   };
 
-  const leaveRoom = async () => {
+  const leaveButton = async () => {
     await meetingManager.leave();
+    await leaveRoom();
+
     navigate("/main");
   };
 
@@ -109,7 +110,7 @@ const Room = () => {
             name="micValue"
           />
         </S.ControllerLeft>
-        <S.ExitButton onClick={leaveRoom}>방 나가기</S.ExitButton>
+        <S.ExitButton onClick={leaveButton}>방 나가기</S.ExitButton>
       </S.Controller>
     </S.Container>
   );

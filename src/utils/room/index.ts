@@ -61,3 +61,9 @@ export const makeAttendee = async (roomId: string) => {
 
   return response;
 };
+
+export const leaveRoom = async () => {
+  const response = instance.delete(uri.rooms);
+
+  return response;
+}
